@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: @project.name@
+    description: @project.version@
+    version: @project.description@
+
+logging:
+  pattern:
+    console: "%d{ABSOLUTE_MICROS} [%-5level] [%t] %c{1} - %msg%n"
+  level:
+    br:
+      com:
+        fsales: info
