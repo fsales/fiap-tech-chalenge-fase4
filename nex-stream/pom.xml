@@ -19,6 +19,8 @@
 		<maven.compile.source>17</maven.compile.source>
 		<maven.compile.target>17</maven.compile.target>
 		<blockhound.version>1.0.8.RELEASE</blockhound.version>
+		<commons-lang3.version>3.14.0</commons-lang3.version>
+		<jackson-datatype-jsr310.version>2.16.1</jackson-datatype-jsr310.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git://github.com/fsales/fiap-tech-chalenge-fase4.git</connection>
@@ -44,6 +46,18 @@
 			<optional>true</optional>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+
+
 		<!--lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -57,6 +71,22 @@
 			<artifactId>blockhound</artifactId>
 			<version>${blockhound.version}</version>
 		</dependency>
+
+		<!--commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+
+		<!-- jackson-datatype-jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson-datatype-jsr310.version}</version>
+		</dependency>
+
+
 
 		<!--spring test -->
 		<dependency>

@@ -1,5 +1,7 @@
 package br.com.fsales.nexstream.presentation.controller.video;
 
+import br.com.fsales.nexstream.dominio.core.video.usecase.dto.CadastrarVideoUseCase;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
@@ -11,7 +13,11 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/videos")
+
+@RequiredArgsConstructor
 public class VideoController {
+
+    private final CadastrarVideoUseCase service;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<String> uploadVideo(
