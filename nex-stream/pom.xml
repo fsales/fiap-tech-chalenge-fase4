@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -21,6 +21,8 @@
 		<blockhound.version>1.0.8.RELEASE</blockhound.version>
 		<commons-lang3.version>3.14.0</commons-lang3.version>
 		<jackson-datatype-jsr310.version>2.16.1</jackson-datatype-jsr310.version>
+		<springdoc-openapi-starter-webflux-ui.version>2.3.0</springdoc-openapi-starter-webflux-ui.version>
+        <archunit-junit5.version>1.2.1</archunit-junit5.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git://github.com/fsales/fiap-tech-chalenge-fase4.git</connection>
@@ -86,9 +88,22 @@
 			<version>${jackson-datatype-jsr310.version}</version>
 		</dependency>
 
+		<!--springdoc-->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+			<version>${springdoc-openapi-starter-webflux-ui.version}</version>
+		</dependency>
+
 
 
 		<!--spring test -->
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

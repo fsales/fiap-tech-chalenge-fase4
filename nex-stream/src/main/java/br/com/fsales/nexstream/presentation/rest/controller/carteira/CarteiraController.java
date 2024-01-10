@@ -1,4 +1,4 @@
-package br.com.fsales.nexstream.presentation.controller.carteira;
+package br.com.fsales.nexstream.presentation.rest.controller.carteira;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -19,5 +19,24 @@ logging:
     br:
       com:
         fsales: info
+management:
+  health:
+    binders:
+      enabled: true
+  endpoint:
+    include: health,info,metrics,prometheus
 
+springdoc:
+  swagger-ui:
+    path: '/swagger-ui.html' #path: /api-docs
+
+application:
+  title: '@project.name@'
+  version: '@project.version@'
+
+  swagger:
+    application:
+      name: '@project.name@'
+      description: '@project.description@'
+      version: '@project.version@'
 

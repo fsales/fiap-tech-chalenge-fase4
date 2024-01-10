@@ -1,19 +1,24 @@
-package br.com.fsales.nexstream.application.video;
+package br.com.fsales.nexstream.usecase.video.impl;
+
 
 import br.com.fsales.nexstream.dominio.RegraDeNegocioException;
 import br.com.fsales.nexstream.dominio.core.video.model.Video;
 import br.com.fsales.nexstream.dominio.core.video.repository.VideoRepository;
-import br.com.fsales.nexstream.dominio.core.video.usecase.DadosCadastrarVideo;
-import br.com.fsales.nexstream.dominio.core.video.usecase.dto.CadastrarVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.DadosCadastrarVideo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-@RequiredArgsConstructor
+
 @Slf4j
 public class CadastrarVideoService implements CadastrarVideoUseCase {
 
     private final VideoRepository videoRepository;
+
+    public CadastrarVideoService(VideoRepository videoRepository) {
+        this.videoRepository = videoRepository;
+    }
 
     @Override
     public Mono<Video> execute(DadosCadastrarVideo dados) {
@@ -35,10 +40,9 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
 
 
     private Mono<Void> validarDados(DadosCadastrarVideo dados) {
-        if (dados.codigo() == null || dados.titulo() == null || dados.descricao() == null || dados.url() == null) {
+        if (dados.titulo() == null || dados.descricao() == null || dados.url() == null) {
             return Mono.error(new RegraDeNegocioException("Todos os campos do vídeo são obrigatórios."));
         }
-        // Adicione outras validações conforme necessário
         return Mono.empty();
     }
 

@@ -7,13 +7,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.UUID;
-
-import br.com.fsales.nexstream.application.video.CadastrarVideoService;
 import br.com.fsales.nexstream.builders.VideoBuilders;
 import br.com.fsales.nexstream.dominio.RegraDeNegocioException;
 import br.com.fsales.nexstream.dominio.core.video.repository.VideoRepository;
-import br.com.fsales.nexstream.dominio.core.video.usecase.DadosCadastrarVideo;
+import br.com.fsales.nexstream.usecase.video.DadosCadastrarVideo;
+import br.com.fsales.nexstream.usecase.video.impl.CadastrarVideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,7 +43,6 @@ class VideoServiceTest {
     @BeforeEach
     void setup() {
         this.video = VideoBuilders.build(
-                UUID.randomUUID().toString(),
                 "Oppenheimer",
                 """
                         O filme é um show visual e auditivo, muito acima da média. A trilha sonora eleva bastante a experiência, 
@@ -57,7 +54,6 @@ class VideoServiceTest {
                         """,
                 "https://youtu.be/ILAwV65XuGA");
 
-        lenient().when(dados.codigo()).thenReturn(video.getCodigo());
         lenient().when(dados.titulo()).thenReturn(video.getTitulo());
         lenient().when(dados.descricao()).thenReturn(video.getDescricao());
         lenient().when(dados.url()).thenReturn(video.getUrl());
