@@ -2,13 +2,15 @@ package br.com.fsales.nexstream.infrastructure.database.mongo.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,16 +34,21 @@ public class VideoEntity {
     @Id
     private String id;
 
-    @NotBlank
+    @NotBlank(message = "Título do vídeo é obrigatório.")
+    @Size(max = 100, message = "Título deve ter no máximo {max} caracteres.")
     private String titulo;
 
-    @NotBlank
+    @NotBlank(message = "Descrição do vídeo é obrigatório.")
+    @Size(max = 255, message = "Descrição deve ter no máximo {max} caracteres.")
     private String descricao;
 
-    @NotBlank
+    @NotBlank(message = "URL do vídeo é obrigatório.")
+    @Size(max = 255, message = "url deve ter no máximo {max} caracteres.")
+    @URL(message = "url inválida")
     private String url;
 
-    @NotBlank
+    @NotBlank(message = "Data de Publicação do vídeo é obrigatório.")
+    @FutureOrPresent
     private LocalDateTime dataPublicacao;
 
     @CreatedDate

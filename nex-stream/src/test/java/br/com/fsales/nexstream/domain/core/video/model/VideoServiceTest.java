@@ -1,4 +1,4 @@
-package br.com.fsales.nexstream.dominio.core.video.model;
+package br.com.fsales.nexstream.domain.core.video.model;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
@@ -7,10 +7,13 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.UUID;
+
 import br.com.fsales.nexstream.builders.VideoBuilders;
-import br.com.fsales.nexstream.dominio.RegraDeNegocioException;
-import br.com.fsales.nexstream.dominio.core.video.repository.VideoRepository;
-import br.com.fsales.nexstream.usecase.video.DadosCadastrarVideo;
+import br.com.fsales.nexstream.domain.RegraDeNegocioException;
+import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
+import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
+import br.com.fsales.nexstream.usecase.video.dto.DadosVideoResponse;
 import br.com.fsales.nexstream.usecase.video.impl.CadastrarVideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,13 +39,16 @@ class VideoServiceTest {
     private VideoRepository repository;
 
     @Mock
-    private DadosCadastrarVideo dados;
+    private DadosCadastrarVideoDto dados;
 
-    private br.com.fsales.nexstream.dominio.core.video.model.Video video;
+    private Video video;
+
+    private DadosVideoResponse dadosVideoResponse;
 
     @BeforeEach
     void setup() {
         this.video = VideoBuilders.build(
+                UUID.randomUUID().toString(),
                 "Oppenheimer",
                 """
                         O filme é um show visual e auditivo, muito acima da média. A trilha sonora eleva bastante a experiência, 
@@ -53,7 +59,7 @@ class VideoServiceTest {
                         condenando todos os lados envolvidos e proporcionando uma experiência cinematográfica perfeita nos quesitos técnicos, mas que também se destaca muito em sua história envolvente, tensa e impactante.
                         """,
                 "https://youtu.be/ILAwV65XuGA");
-
+        this.dadosVideoResponse = new DadosVideoResponse(video);
         lenient().when(dados.titulo()).thenReturn(video.getTitulo());
         lenient().when(dados.descricao()).thenReturn(video.getDescricao());
         lenient().when(dados.url()).thenReturn(video.getUrl());
@@ -66,15 +72,15 @@ class VideoServiceTest {
         void deveCadastrarUmVideo() {
 
             // Mock do comportamento do repository
-            when(repository.cadastrar(Mockito.any(br.com.fsales.nexstream.dominio.core.video.model.Video.class))).thenReturn(Mono.just(video));
+            when(repository.cadastrar(Mockito.any(Video.class))).thenReturn(Mono.just(video));
 
             // Chame o método save e verifique o resultado
             StepVerifier.create(service.execute(dados))
-                    .expectNext(video)
+                    .expectNext(dadosVideoResponse)
                     .verifyComplete();
 
             // Verificar que o método foi chamado pelo menos uma vez
-            verify(repository, atLeastOnce()).cadastrar(any(br.com.fsales.nexstream.dominio.core.video.model.Video.class));
+            verify(repository, atLeastOnce()).cadastrar(any(Video.class));
 
         }
 

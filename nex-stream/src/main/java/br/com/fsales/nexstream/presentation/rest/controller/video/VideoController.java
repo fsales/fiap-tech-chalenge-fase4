@@ -1,30 +1,46 @@
 package br.com.fsales.nexstream.presentation.rest.controller.video;
 
-import br.com.fsales.nexstream.dominio.core.video.model.Video;
+import br.com.fsales.nexstream.presentation.rest.controller.video.swagger.VideoControllerSwagger;
+import br.com.fsales.nexstream.usecase.validation.groups.CreateInfo;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
-import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoDto;
-import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoPort;
+import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoDtoPort;
+import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.usecase.video.dto.DadosVideoResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/videos")
 
 @RequiredArgsConstructor
-public class VideoController {
+public class VideoController implements VideoControllerSwagger {
 
     private final CadastrarVideoUseCase service;
 
     @PostMapping
-    public Mono<Video> save(@RequestBody DadosParaCadastrarVideoDto requet) {
+    @Override
+    public Mono<ResponseEntity<DadosVideoResponse>> cadastrar(
+            @Validated(CreateInfo.class) @RequestBody DadosParaCadastrarVideoRequest requet,
+            UriComponentsBuilder uriComponentsBuilder
+    ) {
 
-        var dadosParaCadastrarVideoPort = new DadosParaCadastrarVideoPort(requet);
+        var dadosParaCadastrarVideoPort = new DadosParaCadastrarVideoDtoPort(requet);
+        var mono = service.execute(dadosParaCadastrarVideoPort);
 
-        return service.execute(dadosParaCadastrarVideoPort);
+        return mono.map(item -> {
+
+            var uri = uriComponentsBuilder.path(String.format("%s/{id}", "/videos"))
+                    .buildAndExpand(item.id())
+                    .toUri();
+            return ResponseEntity.created(uri).body(item);
+        });
     }
 
 //    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

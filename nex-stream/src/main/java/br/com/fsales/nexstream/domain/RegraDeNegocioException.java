@@ -1,4 +1,4 @@
-package br.com.fsales.nexstream.dominio;
+package br.com.fsales.nexstream.domain;
 
 public class RegraDeNegocioException extends RuntimeException {
 

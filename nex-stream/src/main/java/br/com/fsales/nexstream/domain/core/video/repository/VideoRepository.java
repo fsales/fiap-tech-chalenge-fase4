@@ -1,6 +1,6 @@
-package br.com.fsales.nexstream.dominio.core.video.repository;
+package br.com.fsales.nexstream.domain.core.video.repository;
 
-import br.com.fsales.nexstream.dominio.core.video.model.Video;
+import br.com.fsales.nexstream.domain.core.video.model.Video;
 import reactor.core.publisher.Mono;
 
 public interface VideoRepository  {

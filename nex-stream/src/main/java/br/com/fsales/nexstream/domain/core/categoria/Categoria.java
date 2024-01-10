@@ -1,9 +1,9 @@
-package br.com.fsales.nexstream.dominio.core.categoria;
+package br.com.fsales.nexstream.domain.core.categoria;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import br.com.fsales.nexstream.dominio.core.video.model.Video;
+import br.com.fsales.nexstream.domain.core.video.model.Video;
 
 public class Categoria {
     private String codigo;

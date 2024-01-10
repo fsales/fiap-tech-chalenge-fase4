@@ -1,18 +1,19 @@
 package br.com.fsales.nexstream.builders;
 
-import br.com.fsales.nexstream.dominio.core.video.model.Video;
-import br.com.fsales.nexstream.usecase.video.DadosCadastrarVideo;
+import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
+import br.com.fsales.nexstream.domain.core.video.model.Video;
 
 
 public class VideoBuilders {
 
     public static Video build(
+            String id,
             String titulo,
             String descricao,
             String url
 
     ) {
-        return new Video(new DadosCadastrarVideo() {
+        return new Video(new DadosCadastrarVideoDto() {
 
             @Override
             public String titulo() {
@@ -27,6 +28,11 @@ public class VideoBuilders {
             @Override
             public String url() {
                 return url;
+            }
+
+            @Override
+            public String id() {
+                return id;
             }
         });
     }
