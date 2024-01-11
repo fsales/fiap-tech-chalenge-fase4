@@ -11,6 +11,14 @@ spring:
       uri: ${NEX_STREAM_MONGODB_URI}
       database: ${NEX_STREAM_MONGODB_DATABASE}
 
+  mvc:
+    problemdetails:
+      enabled: true
+
+server:
+  error:
+    include-stacktrace: never
+
 
 logging:
   pattern:

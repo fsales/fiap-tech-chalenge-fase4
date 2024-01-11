@@ -1,12 +1,12 @@
 package br.com.fsales.nexstream.domain.core.video.model;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
 import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @EqualsAndHashCode(of = {"url", "titulo"})

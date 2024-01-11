@@ -1,8 +1,8 @@
 package br.com.fsales.nexstream.domain;
 
-import java.util.Set;
-
 import br.com.fsales.nexstream.domain.core.video.model.Video;
+
+import java.util.Set;
 
 public class Usuario {
     private String id;

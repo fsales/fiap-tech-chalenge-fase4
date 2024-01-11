@@ -1,7 +1,5 @@
 package br.com.fsales.nexstream.infrastructure.database.mongo.adapter;
 
-import java.util.Objects;
-
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
 import br.com.fsales.nexstream.infrastructure.database.mongo.mapper.VideoEntityMapper;
@@ -10,6 +8,8 @@ import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
