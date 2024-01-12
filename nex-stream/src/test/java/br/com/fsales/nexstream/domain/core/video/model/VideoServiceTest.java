@@ -13,7 +13,6 @@ import br.com.fsales.nexstream.builders.VideoBuilders;
 import br.com.fsales.nexstream.domain.RegraDeNegocioException;
 import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
-import br.com.fsales.nexstream.usecase.video.dto.DadosVideoResponse;
 import br.com.fsales.nexstream.usecase.video.impl.CadastrarVideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,8 +42,6 @@ class VideoServiceTest {
 
     private Video video;
 
-    private DadosVideoResponse dadosVideoResponse;
-
     @BeforeEach
     void setup() {
         this.video = VideoBuilders.build(
@@ -59,7 +56,6 @@ class VideoServiceTest {
                         condenando todos os lados envolvidos e proporcionando uma experiência cinematográfica perfeita nos quesitos técnicos, mas que também se destaca muito em sua história envolvente, tensa e impactante.
                         """,
                 "https://youtu.be/ILAwV65XuGA");
-        this.dadosVideoResponse = new DadosVideoResponse(video);
         lenient().when(dados.titulo()).thenReturn(video.getTitulo());
         lenient().when(dados.descricao()).thenReturn(video.getDescricao());
         lenient().when(dados.url()).thenReturn(video.getUrl());
@@ -76,7 +72,7 @@ class VideoServiceTest {
 
             // Chame o método save e verifique o resultado
             StepVerifier.create(service.execute(dados))
-                    .expectNext(dadosVideoResponse)
+                    .expectNext(video)
                     .verifyComplete();
 
             // Verificar que o método foi chamado pelo menos uma vez

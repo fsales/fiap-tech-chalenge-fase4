@@ -1,6 +1,6 @@
-package br.com.fsales.nexstream.usecase.video.dto;
+package br.com.fsales.nexstream.presentation.rest.dto.video;
 
-import br.com.fsales.nexstream.usecase.validation.groups.CreateInfo;
+import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;

@@ -15,9 +15,9 @@ spring:
     problemdetails:
       enabled: true
 
-server:
-  error:
-    include-stacktrace: never
+#server:
+#  error:
+#    include-stacktrace: never
 
 
 logging:

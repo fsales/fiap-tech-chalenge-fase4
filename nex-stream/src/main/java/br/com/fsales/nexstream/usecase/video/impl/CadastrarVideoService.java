@@ -6,7 +6,6 @@ import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
-import br.com.fsales.nexstream.usecase.video.dto.DadosVideoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -23,7 +22,7 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
     }
 
     @Override
-    public Mono<DadosVideoResponse> execute(DadosCadastrarVideoDto dados) {
+    public Mono<Video> execute(DadosCadastrarVideoDto dados) {
         return validarDados(dados)
                 .then(Mono.defer(() -> {
                     Mono<Boolean> tituloCadastradoMono = videoRepository.tituloJaCadastrado(dados.titulo());
@@ -36,7 +35,7 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
 
                     var video = new Video(dados);
                     return videoRepository.cadastrar(video);
-                }).map(DadosVideoResponse::new)
+                })
                 .onErrorResume(RegraDeNegocioException.class, Mono::error);
     }
 

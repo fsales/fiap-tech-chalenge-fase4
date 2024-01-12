@@ -1,4 +1,4 @@
-package br.com.fsales.nexstream.usecase.video.dto;
+package br.com.fsales.nexstream.presentation.rest.controller.video.dto;
 
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 

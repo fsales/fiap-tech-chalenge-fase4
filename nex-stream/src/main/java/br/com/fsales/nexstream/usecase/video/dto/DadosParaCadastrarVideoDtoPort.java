@@ -8,7 +8,4 @@ public record DadosParaCadastrarVideoDtoPort(
         String url
 ) implements DadosCadastrarVideoDto {
 
-    public DadosParaCadastrarVideoDtoPort(DadosParaCadastrarVideoRequest dados){
-         this(dados.titulo(), dados.descricao(), dados.url());
-    }
 }

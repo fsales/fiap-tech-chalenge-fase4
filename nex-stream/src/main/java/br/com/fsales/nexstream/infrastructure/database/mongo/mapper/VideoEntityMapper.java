@@ -6,6 +6,9 @@ import br.com.fsales.nexstream.infrastructure.database.mongo.entity.VideoEntity;
 
 public final class VideoEntityMapper {
 
+    private VideoEntityMapper() {
+    }
+
     public static Video convertToVideo(VideoEntity videoEntity) {
 
         return new Video(new DadosCadastrarVideoDto() {

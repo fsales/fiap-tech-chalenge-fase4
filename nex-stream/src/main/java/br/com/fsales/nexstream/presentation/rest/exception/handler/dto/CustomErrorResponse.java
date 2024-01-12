@@ -16,6 +16,6 @@ import java.util.List;
 public class CustomErrorResponse {
     private OffsetDateTime timestamp;
     private HttpStatus status;
-    private String traceId; // Adicione o traceId se estiver disponível
+    private String traceId;
     private List<ErrorDetails> errors;
 }

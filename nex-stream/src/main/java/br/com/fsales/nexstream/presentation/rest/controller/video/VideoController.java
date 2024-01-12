@@ -1,11 +1,11 @@
 package br.com.fsales.nexstream.presentation.rest.controller.video;
 
+import br.com.fsales.nexstream.presentation.rest.controller.video.dto.DadosVideoResponse;
 import br.com.fsales.nexstream.presentation.rest.controller.video.swagger.VideoControllerSwagger;
-import br.com.fsales.nexstream.usecase.validation.groups.CreateInfo;
+import br.com.fsales.nexstream.presentation.rest.dto.video.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDdtoMapper;
+import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
-import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoDtoPort;
-import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoRequest;
-import br.com.fsales.nexstream.usecase.video.dto.DadosVideoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,15 +31,16 @@ public class VideoController implements VideoControllerSwagger {
             UriComponentsBuilder uriComponentsBuilder
     ) {
 
-        var dadosParaCadastrarVideoPort = new DadosParaCadastrarVideoDtoPort(requet);
+
+        var dadosParaCadastrarVideoPort = VideoDdtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
         var mono = service.execute(dadosParaCadastrarVideoPort);
 
-        return mono.map(item -> {
-
+        return mono.map(video -> {
+            var videoResponse = VideoDdtoMapper.convertVideoToDadosVideoResponse(video);
             var uri = uriComponentsBuilder.path(String.format("%s/{id}", "/videos"))
-                    .buildAndExpand(item.id())
+                    .buildAndExpand(videoResponse.id())
                     .toUri();
-            return ResponseEntity.created(uri).body(item);
+            return ResponseEntity.created(uri).body(videoResponse);
         });
     }
 
