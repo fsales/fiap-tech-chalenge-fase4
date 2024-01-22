@@ -14,9 +14,9 @@ public enum ErrorDetails {
     @JsonProperty("errorCode")
     private Integer errorCode;
     @JsonProperty("referenceUrl")
-    private  String referenceUrl;
+    private String referenceUrl;
     @JsonProperty("errorMessage")
-    private  String errorMessage;
+    private String errorMessage;
 
     ErrorDetails(Integer errorCode, String errorMessage, String referenceUrl) {
         this.errorCode = errorCode;

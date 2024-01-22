@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 public class CarteiraController {
 
     @GetMapping
-    public Mono<String> helloWord(){
+    public Mono<String> helloWord() {
 
         return Mono.just("Hello Word");
     }

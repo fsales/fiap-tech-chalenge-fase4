@@ -1,6 +1,11 @@
 package br.com.fsales.nexstream.presentation.rest.exception.handler;
 
 
+import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.Optional;
+
 import br.com.fsales.nexstream.domain.RegraDeNegocioException;
 import br.com.fsales.nexstream.presentation.rest.exception.handler.dto.CustomErrorResponse;
 import br.com.fsales.nexstream.presentation.rest.exception.handler.dto.ErrorDetails;
@@ -17,11 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.net.URI;
-import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.Optional;
 
 /**
  * https://www.baeldung.com/spring-boot-custom-webflux-exceptions

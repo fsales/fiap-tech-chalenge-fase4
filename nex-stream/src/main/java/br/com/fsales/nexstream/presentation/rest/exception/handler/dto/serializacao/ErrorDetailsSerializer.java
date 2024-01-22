@@ -1,11 +1,11 @@
 package br.com.fsales.nexstream.presentation.rest.exception.handler.dto.serializacao;
 
+import java.io.IOException;
+
 import br.com.fsales.nexstream.presentation.rest.exception.handler.dto.ErrorDetails;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
-import java.io.IOException;
 
 public class ErrorDetailsSerializer extends JsonSerializer<ErrorDetails> {
     @Override

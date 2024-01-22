@@ -1,9 +1,9 @@
 package br.com.fsales.nexstream.presentation.rest.controller.video;
 
-import br.com.fsales.nexstream.presentation.rest.controller.video.dto.DadosVideoResponse;
 import br.com.fsales.nexstream.presentation.rest.controller.video.swagger.VideoControllerSwagger;
-import br.com.fsales.nexstream.presentation.rest.dto.video.DadosParaCadastrarVideoRequest;
-import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDdtoMapper;
+import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
+import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDtoMapper;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,11 @@ public class VideoController implements VideoControllerSwagger {
     ) {
 
 
-        var dadosParaCadastrarVideoPort = VideoDdtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
+        var dadosParaCadastrarVideoPort = VideoDtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
         var mono = service.execute(dadosParaCadastrarVideoPort);
 
         return mono.map(video -> {
-            var videoResponse = VideoDdtoMapper.convertVideoToDadosVideoResponse(video);
+            var videoResponse = VideoDtoMapper.convertVideoToDadosVideoResponse(video);
             var uri = uriComponentsBuilder.path(String.format("%s/{id}", "/videos"))
                     .buildAndExpand(videoResponse.id())
                     .toUri();

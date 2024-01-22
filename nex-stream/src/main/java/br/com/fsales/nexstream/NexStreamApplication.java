@@ -14,8 +14,8 @@ public class NexStreamApplication {
 //		BlockHound.install();
 //	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(NexStreamApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NexStreamApplication.class, args);
+    }
 
 }

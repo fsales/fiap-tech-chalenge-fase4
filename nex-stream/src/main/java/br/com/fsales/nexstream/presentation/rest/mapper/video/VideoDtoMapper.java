@@ -1,13 +1,13 @@
 package br.com.fsales.nexstream.presentation.rest.mapper.video;
 
 import br.com.fsales.nexstream.domain.core.video.model.Video;
-import br.com.fsales.nexstream.presentation.rest.controller.video.dto.DadosVideoResponse;
-import br.com.fsales.nexstream.presentation.rest.dto.video.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
 import br.com.fsales.nexstream.usecase.video.dto.DadosParaCadastrarVideoDtoPort;
 
-public final class VideoDdtoMapper {
+public final class VideoDtoMapper {
 
-    private VideoDdtoMapper() {
+    private VideoDtoMapper() {
     }
 
     public static DadosParaCadastrarVideoDtoPort convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(

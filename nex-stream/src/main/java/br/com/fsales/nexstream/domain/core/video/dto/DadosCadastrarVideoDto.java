@@ -12,5 +12,4 @@ public interface DadosCadastrarVideoDto {
         return null;
     }
 
-    ;
 }

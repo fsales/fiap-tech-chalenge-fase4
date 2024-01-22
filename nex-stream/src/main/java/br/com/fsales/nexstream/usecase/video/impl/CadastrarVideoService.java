@@ -46,9 +46,4 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
         }
         return Mono.empty();
     }
-
-    private Mono<Video> criarErro(String mensagem) {
-        log.error(mensagem);
-        return Mono.error(new RegraDeNegocioException(mensagem));
-    }
 }

@@ -1,8 +1,8 @@
 package br.com.fsales.nexstream.presentation.rest.controller.video.swagger;
 
 
-import br.com.fsales.nexstream.presentation.rest.controller.video.dto.DadosVideoResponse;
-import br.com.fsales.nexstream.presentation.rest.dto.video.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCadastrarVideoRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
