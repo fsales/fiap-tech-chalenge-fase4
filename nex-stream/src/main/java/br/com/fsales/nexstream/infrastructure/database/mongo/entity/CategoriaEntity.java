@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "categorias")
 @CompoundIndexes({
-        @CompoundIndex(name = "idx_titulo", def = "{'titulo': 1}", unique = true)
+        @CompoundIndex(name = "idx_titulo", def = "{'titulo': 1}")
 })
 
 @Data

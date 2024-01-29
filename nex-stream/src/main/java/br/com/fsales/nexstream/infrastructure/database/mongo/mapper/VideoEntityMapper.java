@@ -52,17 +52,20 @@ public final class VideoEntityMapper {
 
     public static VideoEntity convertToVideoEntity(Video video) {
         var categoria = video.getCategoria();
-        return new VideoEntity(
-                video.getTitulo(),
-                video.getDescricao(),
-                video.getUrl(),
-                video.getDataPublicacao(),
-                CategoriaEntity
+
+        return VideoEntity
+                .builder()
+                .id(video.getId())
+                .titulo(video.getTitulo())
+                .descricao(video.getDescricao())
+                .url(video.getUrl())
+                .dataPublicacao(video.getDataPublicacao())
+                .categoria(CategoriaEntity
                         .builder()
                         .id(categoria.getId())
                         .titulo(categoria.getTitulo())
-                        .build()
-        );
+                        .build())
+                .build();
     }
 
 }

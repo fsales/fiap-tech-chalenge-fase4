@@ -27,6 +27,15 @@ logging:
     br:
       com:
         fsales: info
+
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: debug
+              ReactiveMongoTemplate: debug
+
 management:
   health:
     binders:

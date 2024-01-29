@@ -14,11 +14,11 @@ import lombok.ToString;
 @ToString(of = {"url", "titulo"})
 public class Video {
     private final String id;
-    private final String titulo;
-    private final String descricao;
-    private final String url;
-    private final LocalDateTime dataPublicacao;
-    private final Categoria categoria;
+    private String titulo;
+    private String descricao;
+    private String url;
+    private LocalDateTime dataPublicacao;
+    private Categoria categoria;
 
 
     public Video(DadosCadastrarVideoDto dados, Categoria categoria) {
@@ -38,5 +38,15 @@ public class Video {
 
         this.categoria = categoria;
 
+    }
+
+    public void atualizarDados(DadosCadastrarVideoDto dados, Categoria categoria) {
+
+        this.dataPublicacao = LocalDateTime.now();
+        this.titulo = dados.titulo();
+        this.descricao = dados.descricao();
+        this.url = dados.url();
+
+        this.categoria = categoria;
     }
 }

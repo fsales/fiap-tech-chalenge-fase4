@@ -5,11 +5,15 @@ import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCada
 import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
 import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDtoMapper;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
+import br.com.fsales.nexstream.usecase.video.AtualizarrVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +26,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class VideoController implements VideoControllerSwagger {
 
-    private final CadastrarVideoUseCase service;
+    private final CadastrarVideoUseCase cadastrarVideoUseCase;
+
+    private final AtualizarrVideoUseCase atualizarrVideoUseCase;
 
     @PostMapping
     @Override
@@ -33,7 +39,7 @@ public class VideoController implements VideoControllerSwagger {
 
 
         var dadosParaCadastrarVideoPort = VideoDtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
-        var mono = service.execute(dadosParaCadastrarVideoPort);
+        var mono = cadastrarVideoUseCase.execute(dadosParaCadastrarVideoPort);
 
         return mono.map(video -> {
             var videoResponse = VideoDtoMapper.convertVideoToDadosVideoResponse(video);
@@ -42,6 +48,20 @@ public class VideoController implements VideoControllerSwagger {
                     .toUri();
             return ResponseEntity.created(uri).body(videoResponse);
         });
+    }
+
+
+    @PutMapping("/{id}")
+    @Override
+    public Mono<ResponseEntity<DadosVideoResponse>> atualizar(
+            @PathVariable("id") String id,
+            @RequestBody @Valid DadosParaCadastrarVideoRequest requet
+    ) {
+
+        var dadosParaAtualizarrVideoPort = VideoDtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
+        var mono = atualizarrVideoUseCase.execute(id, dadosParaAtualizarrVideoPort);
+
+        return mono.map(video -> ResponseEntity.ok(VideoDtoMapper.convertVideoToDadosVideoResponse(video)));
     }
 
 //    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

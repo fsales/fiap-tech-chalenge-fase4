@@ -9,4 +9,6 @@ import reactor.core.publisher.Mono;
 public interface VideoMongoRepository extends ReactiveMongoRepository<VideoEntity, String> {
 
     Mono<Boolean> existsByTituloIgnoreCase(String titulo);
+
+    Mono<Boolean> existsByTituloIgnoreCaseAndIdNotIn(String titulo, String id);
 }

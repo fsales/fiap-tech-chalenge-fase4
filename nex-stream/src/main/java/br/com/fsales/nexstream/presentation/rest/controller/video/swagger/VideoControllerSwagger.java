@@ -23,4 +23,15 @@ public interface VideoControllerSwagger {
             DadosParaCadastrarVideoRequest requet,
             UriComponentsBuilder uriComponentsBuilder
     );
+
+    @Operation(summary = "Atualiza um vídeo", tags = {"Video"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Vídeo atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Bad Request")
+    })
+    Mono<ResponseEntity<DadosVideoResponse>> atualizar(
+            String id,
+            DadosParaCadastrarVideoRequest requet
+    );
 }
