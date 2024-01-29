@@ -11,6 +11,8 @@ import java.util.UUID;
 
 import br.com.fsales.nexstream.builders.VideoBuilders;
 import br.com.fsales.nexstream.domain.RegraDeNegocioException;
+import br.com.fsales.nexstream.domain.core.categoria.model.Categoria;
+import br.com.fsales.nexstream.domain.core.categoria.repository.CategoriaRepository;
 import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
 import br.com.fsales.nexstream.usecase.video.impl.CadastrarVideoService;
@@ -38,9 +40,14 @@ class VideoServiceTest {
     private VideoRepository repository;
 
     @Mock
+    private CategoriaRepository categoriaRepository;
+
+    @Mock
     private DadosCadastrarVideoDto dados;
 
     private Video video;
+
+    private Categoria categoria;
 
     @BeforeEach
     void setup() {
@@ -58,9 +65,13 @@ class VideoServiceTest {
                 "https://youtu.be/ILAwV65XuGA",
                 "65b11f0c1325890e332a6b6d",
                 "Drama");
+
+        this.categoria = video.getCategoria();
+
         lenient().when(dados.titulo()).thenReturn(video.getTitulo());
         lenient().when(dados.descricao()).thenReturn(video.getDescricao());
         lenient().when(dados.url()).thenReturn(video.getUrl());
+        lenient().when(dados.categoria()).thenReturn(video.getCategoria().getTitulo());
     }
 
     @Nested
@@ -71,6 +82,9 @@ class VideoServiceTest {
 
             // Mock do comportamento do repository
             when(repository.cadastrar(Mockito.any(Video.class))).thenReturn(Mono.just(video));
+            when(categoriaRepository.detalharPorTitulo(Mockito.any(String.class))).thenReturn(Mono.just(categoria));
+
+            //categoriaRepository.detalharPorTitulo(dados.categoria());
 
             // Chame o método save e verifique o resultado
             StepVerifier.create(service.execute(dados))
