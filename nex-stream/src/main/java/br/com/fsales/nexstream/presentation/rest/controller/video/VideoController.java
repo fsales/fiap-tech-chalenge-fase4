@@ -1,16 +1,23 @@
 package br.com.fsales.nexstream.presentation.rest.controller.video;
 
 import br.com.fsales.nexstream.presentation.rest.controller.video.swagger.VideoControllerSwagger;
+import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosFiltroVideoRequest;
 import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCadastrarVideoRequest;
 import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
 import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDtoMapper;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
-import br.com.fsales.nexstream.usecase.video.AtualizarrVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.AtualizarVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.ConsultarVideoUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -28,7 +36,9 @@ public class VideoController implements VideoControllerSwagger {
 
     private final CadastrarVideoUseCase cadastrarVideoUseCase;
 
-    private final AtualizarrVideoUseCase atualizarrVideoUseCase;
+    private final AtualizarVideoUseCase atualizarVideoUseCase;
+
+    private final ConsultarVideoUseCase consultarVideoUseCase;
 
     @PostMapping
     @Override
@@ -59,28 +69,32 @@ public class VideoController implements VideoControllerSwagger {
     ) {
 
         var dadosParaAtualizarrVideoPort = VideoDtoMapper.convertDadosParaCadastrarVideoRequestToDadosParaCadastrarVideoPort(requet);
-        var mono = atualizarrVideoUseCase.execute(id, dadosParaAtualizarrVideoPort);
+        var mono = atualizarVideoUseCase.execute(id, dadosParaAtualizarrVideoPort);
 
         return mono.map(video -> ResponseEntity.ok(VideoDtoMapper.convertVideoToDadosVideoResponse(video)));
     }
 
-//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public Mono<String> uploadVideo(
-//            @ModelAttribute VideoRequest videoRequest
-//    ) {
-//
-//        // Aqui você pode processar o arquivo e os outros atributos
-//        // Neste exemplo, apenas retornamos uma mensagem simples
-//        FilePart file = videoRequest.file();
-//        String titulo = videoRequest.titulo();
-//        String descricao = videoRequest.descricao();
-//
-//        return DataBufferUtils.join(file.content())
-//                .map(dataBuffer -> {
-//                    // Processar o arquivo aqui (por exemplo, salvar no sistema de arquivos ou armazenar em um banco de dados)
-//                    // Neste exemplo, apenas retornamos uma mensagem simples
-//                    DataBufferUtils.release(dataBuffer);
-//                    return "Vídeo " + titulo + " enviado com sucesso!";
-//                });
-//    }
+    @GetMapping
+    //@Override
+    public Mono<ResponseEntity<Page<DadosVideoResponse>>> listarTodos(
+            DadosFiltroVideoRequest request,
+            Pageable pageable
+    ) {
+        return consultarVideoUseCase
+                .execute(
+                        request,
+                        pageable.getPageNumber(),
+                        pageable.getPageSize()
+                )
+                .map(
+                        pagina -> {
+                            var page = pagina.map(VideoDtoMapper::convertVideoToDadosVideoResponse);
+                            var total = page.totalElements();
+                            var pageSize = pageable.getPageSize();
+                            var pageNumber = pageable.getPageNumber();
+
+                            return ResponseEntity.ok(new PageImpl<>(page.list(), PageRequest.of(pageNumber, pageSize), total));
+                        }
+                );
+    }
 }

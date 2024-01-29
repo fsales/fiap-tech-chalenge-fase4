@@ -5,15 +5,16 @@ import br.com.fsales.nexstream.domain.core.categoria.repository.CategoriaReposit
 import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
-import br.com.fsales.nexstream.usecase.video.AtualizarrVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.AtualizarVideoUseCase;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class AtualizarVideoService implements AtualizarrVideoUseCase {
+public class AtualizarVideoService implements AtualizarVideoUseCase {
     private final VideoRepository videoRepository;
 
     private final CategoriaRepository categoriaRepository;

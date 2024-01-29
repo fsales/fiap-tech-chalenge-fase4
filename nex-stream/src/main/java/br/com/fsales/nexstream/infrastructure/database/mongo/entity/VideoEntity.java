@@ -1,5 +1,6 @@
 package br.com.fsales.nexstream.infrastructure.database.mongo.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.FutureOrPresent;
@@ -50,7 +51,7 @@ public class VideoEntity {
 
     @NotBlank(message = "Data de Publicação do vídeo é obrigatório.")
     @FutureOrPresent
-    private LocalDateTime dataPublicacao;
+    private LocalDate dataPublicacao;
 
     @NotNull(message = "Categoria do vídeo é obrigatório.")
     private CategoriaEntity categoria;
@@ -61,7 +62,7 @@ public class VideoEntity {
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    public VideoEntity(String titulo, String descricao, String url, LocalDateTime dataPublicacao, CategoriaEntity categoria) {
+    public VideoEntity(String titulo, String descricao, String url, LocalDate dataPublicacao, CategoriaEntity categoria) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.url = url;

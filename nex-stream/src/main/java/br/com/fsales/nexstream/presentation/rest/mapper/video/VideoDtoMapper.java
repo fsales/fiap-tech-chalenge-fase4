@@ -31,7 +31,7 @@ public final class VideoDtoMapper {
                 video.getTitulo(),
                 video.getDescricao(),
                 video.getUrl(),
-                video.getTitulo()
+                categoria.getTitulo()
         );
     }
 }

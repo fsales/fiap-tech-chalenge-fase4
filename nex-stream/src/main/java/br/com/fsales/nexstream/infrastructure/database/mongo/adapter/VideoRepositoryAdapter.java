@@ -2,6 +2,8 @@ package br.com.fsales.nexstream.infrastructure.database.mongo.adapter;
 
 import java.util.Objects;
 
+import br.com.fsales.nexstream.domain.core.page.Pagina;
+import br.com.fsales.nexstream.domain.core.video.dto.DadosFiltroDto;
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
 import br.com.fsales.nexstream.infrastructure.database.mongo.mapper.VideoEntityMapper;
@@ -16,6 +18,11 @@ import reactor.core.publisher.Mono;
 public class VideoRepositoryAdapter implements VideoRepository {
 
     private final VideoMongoRepository repository;
+
+    public  Mono<Pagina<Video>> listarTodos(DadosFiltroDto filtro, int pageNumber, int pageSize){
+
+        return repository.consultaPaginada(filtro, pageNumber, pageSize);
+    }
 
     @Override
     public Mono<Video> cadastrar(Video video) {
