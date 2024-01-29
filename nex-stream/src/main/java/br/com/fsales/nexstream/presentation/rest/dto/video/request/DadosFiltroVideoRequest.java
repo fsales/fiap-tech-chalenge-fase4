@@ -7,13 +7,13 @@ import br.com.fsales.nexstream.presentation.rest.dto.video.request.swagger.Dados
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public record DadosFiltroVideoRequest(
-    String titulo,
+        String titulo,
 
-    String descricao,
+        String descricao,
 
-    String categoria,
+        String categoria,
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    LocalDate dataPublicacao
+        @JsonFormat(pattern = "dd/MM/yyyy")
+        LocalDate dataPublicacao
 ) implements DadosFiltroDto, DadosFiltroVideoRequestSwagger {
 }

@@ -6,22 +6,22 @@ import br.com.fsales.nexstream.presentation.rest.dto.video.request.DadosParaCada
 import br.com.fsales.nexstream.presentation.rest.dto.video.response.DadosVideoResponse;
 import br.com.fsales.nexstream.presentation.rest.mapper.video.VideoDtoMapper;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
+import br.com.fsales.nexstream.presentation.rest.validation.groups.UpdateInfo;
 import br.com.fsales.nexstream.usecase.video.AtualizarVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.ConsultarVideoUseCase;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Schema;
+import br.com.fsales.nexstream.usecase.video.DeleteVideoUseCase;
+import br.com.fsales.nexstream.usecase.video.DetalharVideoUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -44,6 +43,10 @@ public class VideoController implements VideoControllerSwagger {
     private final AtualizarVideoUseCase atualizarVideoUseCase;
 
     private final ConsultarVideoUseCase consultarVideoUseCase;
+
+    private final DeleteVideoUseCase deleteVideoUseCase;
+
+    private final DetalharVideoUseCase detalharVideoUseCase;
 
     @PostMapping
     @Override
@@ -69,6 +72,7 @@ public class VideoController implements VideoControllerSwagger {
     @PutMapping("/{id}")
     @Override
     public Mono<ResponseEntity<DadosVideoResponse>> atualizar(
+            @Validated(UpdateInfo.class)
             @PathVariable("id") String id,
             @RequestBody @Valid DadosParaCadastrarVideoRequest requet
     ) {
@@ -83,7 +87,7 @@ public class VideoController implements VideoControllerSwagger {
     @Override
     public Mono<ResponseEntity<Page<DadosVideoResponse>>> listarTodos(
             DadosFiltroVideoRequest request,
-            @PageableDefault(sort = { "categoria.titulo" }) Pageable pageable
+            @PageableDefault(sort = {"categoria.titulo"}) Pageable pageable
     ) {
         return consultarVideoUseCase
                 .execute(
@@ -101,5 +105,26 @@ public class VideoController implements VideoControllerSwagger {
                             return ResponseEntity.ok(new PageImpl<>(page.list(), PageRequest.of(pageNumber, pageSize), total));
                         }
                 );
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Override
+    public Mono<ResponseEntity<Void>> delete(
+            @PathVariable String id
+    ) {
+        return deleteVideoUseCase
+                .execute(id)
+                .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    @GetMapping("/{id}")
+    @Override
+    public Mono<ResponseEntity<DadosVideoResponse>> detalhar(
+            @PathVariable(name = "id") String id
+    ) {
+        return detalharVideoUseCase
+                .execute(id)
+                .map(video -> ResponseEntity.ok(VideoDtoMapper.convertVideoToDadosVideoResponse(video)));
     }
 }

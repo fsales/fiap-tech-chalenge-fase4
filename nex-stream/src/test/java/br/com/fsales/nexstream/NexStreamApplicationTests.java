@@ -12,11 +12,11 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(classes = TestMongoConfig.class)
 class NexStreamApplicationTests {
 
-	@Autowired
-	private ReactiveMongoTemplate reactiveMongoTemplate;
+    @Autowired
+    private ReactiveMongoTemplate reactiveMongoTemplate;
 
-	@Test
-	void contextLoads() {
+    @Test
+    void contextLoads() {
 
-	}
+    }
 }

@@ -10,7 +10,6 @@ import br.com.fsales.nexstream.infrastructure.database.mongo.mapper.VideoEntityM
 import br.com.fsales.nexstream.infrastructure.database.mongo.repository.PageRepositoryCustom;
 import br.com.fsales.nexstream.infrastructure.database.mongo.repository.VideoMongoRepositoryCustom;
 import lombok.RequiredArgsConstructor;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

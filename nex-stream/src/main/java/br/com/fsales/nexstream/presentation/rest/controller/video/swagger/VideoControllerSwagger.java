@@ -10,12 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import org.springframework.data.domain.Pageable;
 
 public interface VideoControllerSwagger {
 
@@ -42,7 +40,7 @@ public interface VideoControllerSwagger {
     );
 
 
-    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título", tags = {"Video"})
+    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título, data de publicação ou categoria", tags = {"Video"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vídeos encontrados com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content)
@@ -51,5 +49,25 @@ public interface VideoControllerSwagger {
     Mono<ResponseEntity<Page<DadosVideoResponse>>> listarTodos(
             DadosFiltroVideoRequest request,
             Pageable pageable
+    );
+
+    @Operation(summary = "Deletar vídeo por id", tags = {"Video"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vídeo deletado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição"),
+            @ApiResponse(responseCode = "404", description = "Vídeo não encontrado"),
+    })
+    Mono<ResponseEntity<Void>> delete(
+            String id
+    );
+
+    @Operation(summary = "Buscar vídeo por id", tags = {"Video"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vídeo encontrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Vídeo não encontrado", content = @Content),
+    })
+    Mono<ResponseEntity<DadosVideoResponse>> detalhar(
+            String id
     );
 }

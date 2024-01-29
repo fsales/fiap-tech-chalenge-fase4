@@ -18,4 +18,6 @@ public interface VideoRepository {
     Mono<Boolean> tituloJaCadastradoIgnorandoId(String titulo, String id);
 
     Mono<Pagina<Video>> listarTodos(DadosFiltroDto filtro, int pageNumber, int pageSize);
+
+    Mono<Void> delete(String id);
 }

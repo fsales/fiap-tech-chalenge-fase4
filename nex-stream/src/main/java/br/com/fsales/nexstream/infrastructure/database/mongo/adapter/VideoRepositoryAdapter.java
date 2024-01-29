@@ -19,9 +19,18 @@ public class VideoRepositoryAdapter implements VideoRepository {
 
     private final VideoMongoRepository repository;
 
-    public  Mono<Pagina<Video>> listarTodos(DadosFiltroDto filtro, int pageNumber, int pageSize){
+    public Mono<Pagina<Video>> listarTodos(DadosFiltroDto filtro, int pageNumber, int pageSize) {
 
         return repository.consultaPaginada(filtro, pageNumber, pageSize);
+    }
+
+    @Override
+    public Mono<Void> delete(String id) {
+
+        if (StringUtils.isEmpty(id)) {
+            return Mono.error(new IllegalArgumentException("ID do vídeo não pode ser nulo ou vazio."));
+        }
+        return repository.deleteById(id);
     }
 
     @Override

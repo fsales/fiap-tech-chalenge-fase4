@@ -1,7 +1,6 @@
 package br.com.fsales.nexstream.domain.core.video.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import br.com.fsales.nexstream.domain.core.categoria.model.Categoria;

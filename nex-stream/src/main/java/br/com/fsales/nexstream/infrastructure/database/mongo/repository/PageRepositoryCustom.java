@@ -10,31 +10,32 @@ import org.springframework.data.mongodb.core.query.Query;
 import reactor.core.publisher.Mono;
 
 public interface PageRepositoryCustom<T> {
-	int LIMIT = -1;
+    int LIMIT = -1;
 
-	int SKIP = -1;
-	default Mono<Pagina<T>> consultaDocumentosPaginado(
-			Query query,
-			ReactiveMongoTemplate reactiveMongoTemplate,
-			Class<T> entityClass,
-			Pageable pageable,
-			Sort sort
-	) {
+    int SKIP = -1;
 
-		query.with(pageable)
-				.skip((long) pageable.getPageSize() * pageable.getPageNumber())
-				.limit(pageable.getPageSize()).with(sort);
+    default Mono<Pagina<T>> consultaDocumentosPaginado(
+            Query query,
+            ReactiveMongoTemplate reactiveMongoTemplate,
+            Class<T> entityClass,
+            Pageable pageable,
+            Sort sort
+    ) {
 
-		// Realizar a consulta paginada
-		Mono<List<T>> resultListMono = reactiveMongoTemplate.find(query, entityClass)
-				.collectList();
+        query.with(pageable)
+                .skip((long) pageable.getPageSize() * pageable.getPageNumber())
+                .limit(pageable.getPageSize()).with(sort);
 
-		// Realizar a contagem total
-		Mono<Long> totalElementsMono = reactiveMongoTemplate.count(query.skip(SKIP).limit(LIMIT), entityClass);
+        // Realizar a consulta paginada
+        Mono<List<T>> resultListMono = reactiveMongoTemplate.find(query, entityClass)
+                .collectList();
 
-		// Combinar resultados usando flatMap
-		return resultListMono.flatMap(resultList ->
-				totalElementsMono.map(totalElements -> new Pagina<>(resultList, totalElements))
-		);
-	}
+        // Realizar a contagem total
+        Mono<Long> totalElementsMono = reactiveMongoTemplate.count(query.skip(SKIP).limit(LIMIT), entityClass);
+
+        // Combinar resultados usando flatMap
+        return resultListMono.flatMap(resultList ->
+                totalElementsMono.map(totalElements -> new Pagina<>(resultList, totalElements))
+        );
+    }
 }
