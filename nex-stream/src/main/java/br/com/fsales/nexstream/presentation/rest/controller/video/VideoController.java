@@ -9,11 +9,16 @@ import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
 import br.com.fsales.nexstream.usecase.video.AtualizarVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.CadastrarVideoUseCase;
 import br.com.fsales.nexstream.usecase.video.ConsultarVideoUseCase;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -75,10 +80,10 @@ public class VideoController implements VideoControllerSwagger {
     }
 
     @GetMapping
-    //@Override
+    @Override
     public Mono<ResponseEntity<Page<DadosVideoResponse>>> listarTodos(
             DadosFiltroVideoRequest request,
-            Pageable pageable
+            @PageableDefault(sort = { "categoria.titulo" }) Pageable pageable
     ) {
         return consultarVideoUseCase
                 .execute(

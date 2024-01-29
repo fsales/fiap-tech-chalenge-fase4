@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
@@ -40,13 +42,14 @@ public interface VideoControllerSwagger {
     );
 
 
-//    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título", tags = {"Video"})
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Vídeos encontrados com sucesso"),
-//            @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content)
-//    })
-//    Flux<ResponseEntity<DadosVideoResponse>> listarTodos(
-//            DadosFiltroVideoRequest request,
-//            Pageable pageable
-//    );
+    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título", tags = {"Video"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vídeos encontrados com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content)
+    })
+    @PageableAsQueryParam
+    Mono<ResponseEntity<Page<DadosVideoResponse>>> listarTodos(
+            DadosFiltroVideoRequest request,
+            Pageable pageable
+    );
 }

@@ -1,6 +1,6 @@
 package br.com.fsales.nexstream.presentation.rest.dto.video.request;
 
-import br.com.fsales.nexstream.presentation.rest.dto.video.request.swagger.DadosParaCadastrarVideoRequestRequest;
+import br.com.fsales.nexstream.presentation.rest.dto.video.request.swagger.DadosParaCadastrarVideoRequestSwagger;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.CreateInfo;
 import br.com.fsales.nexstream.presentation.rest.validation.groups.UpdateInfo;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public record DadosParaCadastrarVideoRequest(
         @Size(max = 255, message = "url deve ter no máximo {max} caracteres.", groups = {CreateInfo.class, UpdateInfo.class})
         @URL(message = "url inválida", groups = {CreateInfo.class, UpdateInfo.class})
         String url
-) implements DadosParaCadastrarVideoRequestRequest {
+) implements DadosParaCadastrarVideoRequestSwagger {
 }
 
 

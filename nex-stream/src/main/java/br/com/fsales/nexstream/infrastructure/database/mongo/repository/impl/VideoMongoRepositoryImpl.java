@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -44,8 +45,9 @@ public class VideoMongoRepositoryImpl implements VideoMongoRepositoryCustom<Vide
             criteria.and("categoria.titulo").regex("(?i).*" + Pattern.quote(filtro.categoria()) + ".*");
         }
 
+        var sort = Sort.by(Sort.Order.asc("dataPublicacao"));
 
-        var dados = consultaDocumentosPaginado(query, mongoTemplate, VideoEntity.class, pageable);
+        var dados = consultaDocumentosPaginado(query, mongoTemplate, VideoEntity.class, pageable, sort);
 
         return dados.map(videoEntityPage -> videoEntityPage.map(VideoEntityMapper::convertToVideo));
     }
