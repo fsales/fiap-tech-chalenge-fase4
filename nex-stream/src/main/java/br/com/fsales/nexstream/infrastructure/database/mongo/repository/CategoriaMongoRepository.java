@@ -9,4 +9,6 @@ import reactor.core.publisher.Mono;
 public interface CategoriaMongoRepository extends ReactiveMongoRepository<CategoriaEntity, String> {
 
     Mono<Boolean> existsByTituloIgnoreCase(String titulo);
+
+    Mono<CategoriaEntity> findByTituloIgnoreCase(String titulo);
 }

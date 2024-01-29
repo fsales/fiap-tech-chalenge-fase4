@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,17 +52,21 @@ public class VideoEntity {
     @FutureOrPresent
     private LocalDateTime dataPublicacao;
 
+    @NotNull(message = "Categoria do vídeo é obrigatório.")
+    private CategoriaEntity categoria;
+
     @CreatedDate
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    public VideoEntity(String titulo, String descricao, String url, LocalDateTime dataPublicacao) {
+    public VideoEntity(String titulo, String descricao, String url, LocalDateTime dataPublicacao, CategoriaEntity categoria) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.url = url;
         this.dataPublicacao = dataPublicacao;
+        this.categoria = categoria;
 
     }
 }

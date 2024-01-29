@@ -17,6 +17,7 @@ public final class VideoDtoMapper {
         return new DadosParaCadastrarVideoDtoPort(
                 request.titulo(),
                 request.descricao(),
+                request.categoria(),
                 request.url()
         );
     }
@@ -24,12 +25,13 @@ public final class VideoDtoMapper {
     public static DadosVideoResponse convertVideoToDadosVideoResponse(
             Video video
     ) {
-
+        var categoria = video.getCategoria();
         return new DadosVideoResponse(
                 video.getId(),
                 video.getTitulo(),
                 video.getDescricao(),
-                video.getUrl()
+                video.getUrl(),
+                video.getTitulo()
         );
     }
 }

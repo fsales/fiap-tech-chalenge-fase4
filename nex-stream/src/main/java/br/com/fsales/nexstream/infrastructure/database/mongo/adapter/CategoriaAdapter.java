@@ -42,4 +42,11 @@ public class CategoriaAdapter implements CategoriaRepository {
                 .findById(id)
                 .map(CategoriaEntityMapper::convertToCategoria);
     }
+
+    @Override
+    public Mono<Categoria> detalharPorTitulo(String titulo) {
+        return repository
+                .findByTituloIgnoreCase(titulo)
+                .map(CategoriaEntityMapper::convertToCategoria);
+    }
 }

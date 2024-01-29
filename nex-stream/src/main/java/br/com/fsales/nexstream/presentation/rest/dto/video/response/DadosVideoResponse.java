@@ -6,7 +6,8 @@ public record DadosVideoResponse(
         String id,
         String titulo,
         String descricao,
-        String url
+        String url,
+        String categoria
 ) implements DadosVideoResponseSwagger {
 
 }

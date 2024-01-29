@@ -12,4 +12,8 @@ public interface DadosCadastrarVideoDto {
         return null;
     }
 
+    default String categoria() {
+        return null;
+    }
+
 }

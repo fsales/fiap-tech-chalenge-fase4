@@ -55,7 +55,9 @@ class VideoServiceTest {
                         Mas, no geral, é um filme incrível, imersivo e tenso, sendo um dos melhores trabalhos de Christopher Nolan. Aborda de forma brilhante um contexto histórico muito importante, 
                         condenando todos os lados envolvidos e proporcionando uma experiência cinematográfica perfeita nos quesitos técnicos, mas que também se destaca muito em sua história envolvente, tensa e impactante.
                         """,
-                "https://youtu.be/ILAwV65XuGA");
+                "https://youtu.be/ILAwV65XuGA",
+                "65b11f0c1325890e332a6b6d",
+                "Drama");
         lenient().when(dados.titulo()).thenReturn(video.getTitulo());
         lenient().when(dados.descricao()).thenReturn(video.getDescricao());
         lenient().when(dados.url()).thenReturn(video.getUrl());

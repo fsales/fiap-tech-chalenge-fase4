@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "categorias")
 @CompoundIndexes({
-        @CompoundIndex(name = "idx_titulo", def = "{'titulo': 1}")
+        @CompoundIndex(name = "idx_titulo", def = "{'titulo': 1}", unique = true)
 })
 
 @Data
@@ -45,4 +45,5 @@ public class CategoriaEntity {
     public CategoriaEntity(String titulo) {
         this.titulo = titulo;
     }
+
 }

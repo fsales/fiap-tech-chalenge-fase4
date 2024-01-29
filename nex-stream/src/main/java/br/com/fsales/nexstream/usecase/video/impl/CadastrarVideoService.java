@@ -2,6 +2,7 @@ package br.com.fsales.nexstream.usecase.video.impl;
 
 
 import br.com.fsales.nexstream.domain.RegraDeNegocioException;
+import br.com.fsales.nexstream.domain.core.categoria.repository.CategoriaRepository;
 import br.com.fsales.nexstream.domain.core.video.dto.DadosCadastrarVideoDto;
 import br.com.fsales.nexstream.domain.core.video.model.Video;
 import br.com.fsales.nexstream.domain.core.video.repository.VideoRepository;
@@ -17,12 +18,19 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
 
     private final VideoRepository videoRepository;
 
-    public CadastrarVideoService(VideoRepository videoRepository) {
+    private final CategoriaRepository categoriaRepository;
+
+    public CadastrarVideoService(VideoRepository videoRepository, CategoriaRepository categoriaRepository) {
         this.videoRepository = videoRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     @Override
     public Mono<Video> execute(DadosCadastrarVideoDto dados) {
+
+        // consultar a categoria
+
+
         return validarDados(dados)
                 .then(Mono.defer(() -> {
                     Mono<Boolean> tituloCadastradoMono = videoRepository.tituloJaCadastrado(dados.titulo());
@@ -32,8 +40,9 @@ public class CadastrarVideoService implements CadastrarVideoUseCase {
                     if (videoJaCadastrado) {
                         return Mono.error(new RegraDeNegocioException("Cadastro não realizado: Título já cadastrado."));
                     }
-
-                    var video = new Video(dados);
+                    return categoriaRepository.detalharPorTitulo(dados.categoria());
+                }).flatMap(categoria -> {
+                    var video = new Video(dados, categoria);
                     return videoRepository.cadastrar(video);
                 })
                 .onErrorResume(RegraDeNegocioException.class, Mono::error);

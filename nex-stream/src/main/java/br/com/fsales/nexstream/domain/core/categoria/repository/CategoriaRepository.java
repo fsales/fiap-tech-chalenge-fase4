@@ -10,4 +10,6 @@ public interface CategoriaRepository {
     Mono<Boolean> tituloJaCadastrado(String titulo);
 
     Mono<Categoria> detalhar(String id);
+
+    Mono<Categoria> detalharPorTitulo(String titulo);
 }

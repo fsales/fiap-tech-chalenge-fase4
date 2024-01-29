@@ -14,4 +14,7 @@ public interface DadosVideoResponseSwagger {
 
     @Schema(description = "URL do vídeo", required = true, example = "https://www.themoviedb.org/movie/872585-oppenheimer/watch#play=ILAwV65XuGA")
     String url();
+
+    @Schema(description = "Categoria do vídeo", required = true, example = "Drama")
+    String categoria();
 }
