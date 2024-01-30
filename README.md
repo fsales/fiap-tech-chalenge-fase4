@@ -30,6 +30,7 @@
   - [Nexstream - Sistema de compartilhamento de videos](#nexstream---sistema-de-compartilhamento-de-videos)
     - [Endpoints](#endpoints)
 - [API de Categoria](#api-de-categoria)
+  - [Criar Categoria](#criar-categoria)
     - [\[POST\] /categorias](#post-categorias)
   - [Detalhar Categoria](#detalhar-categoria)
     - [\[GET\] /categorias/{id}](#get-categoriasid)
@@ -230,6 +231,7 @@ A Arquitetura Limpa[^1], proposta por Robert C. Martin, visa criar sistemas de s
 
 # API de Categoria
 
+## Criar Categoria
 ![](/doc/img/api-categoriasswagger.PNG)
 ### [POST] /categorias
 
