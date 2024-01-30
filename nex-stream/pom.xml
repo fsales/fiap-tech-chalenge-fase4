@@ -12,7 +12,7 @@
 	<artifactId>nex-stream</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nex-stream</name>
-	<description>Aplicacao que permite o gerenciamento e exibicao de videos.</description>
+	<description>API de compartilhamento de videos. Projeto proposto pela FIAP para a 4° fase do Tech Chalange.</description>
 	<properties>
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

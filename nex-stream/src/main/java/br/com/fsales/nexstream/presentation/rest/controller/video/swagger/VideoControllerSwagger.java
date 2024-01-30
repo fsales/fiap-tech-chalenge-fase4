@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 public interface VideoControllerSwagger {
 
-    @Operation(summary = "Salvar um vídeo", tags = {"Video"})
+    @Operation(summary = "Salvar um vídeo", tags = {"API de Video"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Vídeo salvo com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
@@ -28,7 +28,7 @@ public interface VideoControllerSwagger {
             UriComponentsBuilder uriComponentsBuilder
     );
 
-    @Operation(summary = "Atualiza um vídeo", tags = {"Video"})
+    @Operation(summary = "Atualiza um vídeo", tags = {"API de Video"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Vídeo atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
@@ -40,7 +40,7 @@ public interface VideoControllerSwagger {
     );
 
 
-    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título, data de publicação ou categoria", tags = {"Video"})
+    @Operation(summary = "Buscar todos os vídeos, opcional buscar por título, data de publicação ou categoria", tags = {"API de Video - GET"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vídeos encontrados com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content)
@@ -51,7 +51,7 @@ public interface VideoControllerSwagger {
             Pageable pageable
     );
 
-    @Operation(summary = "Deletar vídeo por id", tags = {"Video"})
+    @Operation(summary = "Deletar vídeo por id", tags = {"API de Video"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Vídeo deletado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição"),
@@ -61,7 +61,7 @@ public interface VideoControllerSwagger {
             String id
     );
 
-    @Operation(summary = "Buscar vídeo por id", tags = {"Video"})
+    @Operation(summary = "Buscar vídeo por id", tags = {"API de Video - GET"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vídeo encontrado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),

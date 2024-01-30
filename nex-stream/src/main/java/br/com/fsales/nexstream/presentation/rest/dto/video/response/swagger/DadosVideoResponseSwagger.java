@@ -1,5 +1,7 @@
 package br.com.fsales.nexstream.presentation.rest.dto.video.response.swagger;
 
+import java.time.LocalDate;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public interface DadosVideoResponseSwagger {
@@ -17,4 +19,7 @@ public interface DadosVideoResponseSwagger {
 
     @Schema(description = "Categoria do vídeo", required = true, example = "Drama")
     String categoria();
+
+    @Schema(description = "Data de publicação do vídeo", required = true, example = "29/01/2024")
+    LocalDate dataPublicacao();
 }
