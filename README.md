@@ -29,6 +29,10 @@
     - [:hammer: Funcionalidades do projeto](#hammer-funcionalidades-do-projeto)
   - [Nexstream - Sistema de compartilhamento de videos](#nexstream---sistema-de-compartilhamento-de-videos)
     - [Endpoints](#endpoints)
+- [API de Categoria](#api-de-categoria)
+    - [\[POST\] /categorias](#post-categorias)
+  - [Detalhar Categoria](#detalhar-categoria)
+    - [\[GET\] /categorias/{id}](#get-categoriasid)
 - [API de Vídeo](#api-de-vídeo)
   - [Criar Vídeo](#criar-vídeo)
     - [\[POST\] /videos](#post-videos)
@@ -40,6 +44,7 @@
     - [\[GET\] /videos](#get-videos)
   - [Excluir Vídeo](#excluir-vídeo)
     - [\[DELETE\] /videos/{id}](#delete-videosid)
+  - [Desafio encontrado durante o desenvolvimento](#desafio-encontrado-durante-o-desenvolvimento)
   - [Referência](#referência)
   
 
@@ -222,6 +227,64 @@ A Arquitetura Limpa[^1], proposta por Robert C. Martin, visa criar sistemas de s
 1. [Swagger](http://127.0.0.1:8080/webjars/swagger-ui/index.html)
 
 2. [CURL](https://curl.se/docs/manual.html)
+
+# API de Categoria
+
+![](/doc/img/api-categoriasswagger.PNG)
+### [POST] /categorias
+
+1. Swagger
+
+```shell
+http://127.0.0.1:8080/webjars/swagger-ui/index.html?urls.primaryName=Categoria#/Api%20de%20Categoria/cadastrar
+```
+
+```shell
+curl -X 'POST' \
+  'http://127.0.0.1:8080/categorias' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "titulo": "Comédia"
+}'
+```
+
+<details>
+
+<summary>Resposta</summary>
+
+```json
+{
+  "id": "65b84b73ea1ea52f1e38037c",
+  "titulo": "Comédia"
+}
+```
+
+</details>
+
+## Detalhar Categoria
+![](/doc/img/api-categoriasswagger-get.PNG)
+
+### [GET] /categorias/{id}
+
+```shell
+http://127.0.0.1:8080/webjars/swagger-ui/index.html?urls.primaryName=Categoria#/Api%20de%20Categoria%20-%20GET/detalhar
+```
+
+```shell
+curl -X 'GET' \
+  'http://127.0.0.1:8080/categorias/65b84b73ea1ea52f1e38037c' \
+  -H 'accept: */*'
+```
+
+<summary>Resposta</summary>
+
+```json
+{
+  "id": "65b84b73ea1ea52f1e38037c",
+  "titulo": "Comédia"
+}
+```
 
 # API de Vídeo
 
@@ -407,6 +470,9 @@ curl -X 'DELETE' \
   'http://127.0.0.1:8080/videos/65b846cf547b2f431b1f7e82' \
   -H 'accept: */*'
 ```
+
+## Desafio encontrado durante o desenvolvimento
+Durante o desenvolvimento do projeto, foi necessário adquirir conhecimento sobre o framework Reactor para estabelecer uma base inicial de desenvolvimento com o Spring WebFlux. Quanto ao sistema de banco de dados, optei por utilizar o MongoDB.
 
 ## Referência
 

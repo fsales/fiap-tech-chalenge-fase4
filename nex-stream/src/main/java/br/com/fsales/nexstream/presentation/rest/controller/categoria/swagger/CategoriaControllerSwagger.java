@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 public interface CategoriaControllerSwagger {
 
-    @Operation(summary = "Salvar uma categoria", tags = {"Categoria"})
+    @Operation(summary = "Salvar uma categoria", tags = {"Api de Categoria"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Categoria salva com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
@@ -23,7 +23,7 @@ public interface CategoriaControllerSwagger {
             UriComponentsBuilder uriComponentsBuilder
     );
 
-    @Operation(summary = "Buscar categoria por id", tags = {"Categoria"})
+    @Operation(summary = "Buscar categoria por id", tags = {"Api de Categoria - GET"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categoria encontrado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Algo de errado com a requisição", content = @Content),
