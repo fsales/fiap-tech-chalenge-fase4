@@ -3,7 +3,7 @@ version: "3.8"
 services:
   nexstream-app:
     container_name: nexstream
-    image: fosales/nex-stream:0.0.3
+    image: fosales/nex-stream:0.0.2
 #    depends_on:
 #      - nexstream-mongo
     restart: always
