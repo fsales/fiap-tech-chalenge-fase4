@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  nexstream-app:
+    container_name: nexstream
+    image: fosales/nex-stream:0.0.11-SNAPSHOT
+#    depends_on:
+#      - nexstream-mongo
+    restart: always
+    ports:
+      - 8080:8080
+    env_file:
+      - nexstream-config/.env-nexstream
+    networks:
+      - spring-docker-compose-nex-stream
+
+#  nexstream-mongo:
+#    container_name: nexstream_mongodb
+#    build:
+#      context: .
+#      dockerfile: mongo-config/Dockerfile
+#    restart: always
+#    ports:
+#      - 27017:27017
+#    env_file:
+#      - mongo-config/.env-mongodb
+#    networks:
+#      - spring-docker-compose-nex-stream
+
+networks:
+  spring-docker-compose-nex-stream:
