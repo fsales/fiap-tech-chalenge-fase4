@@ -7,9 +7,9 @@ COPY pom.xml .
 COPY src src
 
 
-RUN mvn -Dmaven.test.skip=true clean package -Pnative && \
+RUN mvn -Dmaven.test.skip=true clean package && \
 cd target && \
-java -Djarmode=layertools -jar nex-stream.jar extract && \
+java -Djarmode=layertools -jar NexStream.jar extract && \
 chmod +x mvnw # Dar permissões de execução ao arquivo mvnw
 # https://aws.amazon.com/pt/blogs/containers/start-spring-boot-applications-faster-on-aws-fargate-using-soci/
 
@@ -20,8 +20,12 @@ RUN yum install -y shadow-utils
 
 WORKDIR application
 
-RUN groupadd --system spring && \
-    spring -g spring
+
+RUN groupadd --system --gid 3000 spring \
+    && useradd --system --uid 1000 --shell /bin/false --gid spring spring
+
+#RUN groupadd --system spring && \
+#    spring -g spring
 
 USER spring:spring
 
