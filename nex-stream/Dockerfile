@@ -1,34 +1,57 @@
-# Stage 1: Build the native image with GraalVM
-FROM ghcr.io/graalvm/graalvm-ce:22.3.0 AS builder
-
-RUN microdnf install -y unzip zip && \
-    curl -s "https://get.sdkman.io" | bash && \
-    bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install maven"
-
-WORKDIR /app
-
-COPY ./pom.xml ./pom.xml
-COPY ./src ./src/
-
-ENV MAVEN_OPTS='-Xmx8g'
-
-RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
-    mvn -Dmaven.test.skip=true clean package"
+FROM maven:3-amazoncorretto-17 as builder
 
 
-# Stage 2: Create a minimal image to run the application
-FROM public.ecr.aws/lts/ubuntu:22.04
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
 
-RUN addgroup --system spring && adduser --system spring --ingroup spring && \
-   # apt-get update && apt-get install -y openjdk-17-jre-headless && \
-    mkdir /app && chown spring:spring /app
+
+RUN mvn -Dmaven.test.skip=true clean package -Pnative && \
+cd target && \
+java -Djarmode=layertools -jar nex-stream.jar extract && \
+chmod +x mvnw # Dar permissões de execução ao arquivo mvnw
+# https://aws.amazon.com/pt/blogs/containers/start-spring-boot-applications-faster-on-aws-fargate-using-soci/
+
+
+
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
+RUN yum install -y shadow-utils
+
+WORKDIR application
+
+RUN groupadd --system spring && \
+    spring -g spring
 
 USER spring:spring
-WORKDIR /app
 
-#COPY --from=builder /app/target/NexStream.jar /app/NexStream.jar
+COPY --from=builder target/dependencies/ ./
+COPY --from=builder target/spring-boot-loader/ ./
+COPY --from=builder target/snapshot-dependencies/ ./
+COPY --from=builder target/application/ ./
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+
+#FROM amazoncorretto:17-alpine-jdk
 #
-#CMD ["java", "-jar", "/app/NexStream.jar"]
-COPY --from=builder /app/target/nex-stream /app/nex-stream
+#ENV EXPOSE_PORT=8080
+#
+## Adicione dependências do sistema necessárias para o GraalVM
+##RUN apk --no-cache add libstdc++ libgcc
+#
+#ARG DEPENDENCY=/app/target/dependency
+#COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+#COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+#COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+#
+#EXPOSE $EXPOSE_PORT
+#
+#ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -cp app:app/lib/* br.com.fsales.nexstream.NexStreamApplication ${0} ${@}"]
+#ENTRYPOINT ["java","-cp","app:app/lib/*","br.com.fsales.nexstream.NexStreamApplication"]
 
-CMD ["/app/nex-stream"]
+# mkdir target/extracted
+# java -Djarmode=layertools -jar target/*.jar extract --destination target/extracted
+# docker build -t fosales/nex-stream:latest -t fosales/nex-stream:0.0.1-SNAPSHOT .
+# docker  build -f ./nex-stream/Dockerfile -t fosales/nex-stream:latest ./nex-stream/
