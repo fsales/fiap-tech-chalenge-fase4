@@ -4,6 +4,25 @@ spring:
     description: @project.version@
     version: @project.description@
 
+
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: ${NEX_STREAM_MONGODB_URI}
+      database: ${NEX_STREAM_MONGODB_DATABASE}
+
+  mvc:
+    problemdetails:
+      enabled: true
+
+  profiles:
+    active: ${NEX_STREAM_PROFILE_ENVIRONMENT:}
+
+#server:
+#  error:
+#    include-stacktrace: never
+
+
 logging:
   pattern:
     console: "%d{ABSOLUTE_MICROS} [%-5level] [%t] %c{1} - %msg%n"
@@ -11,3 +30,25 @@ logging:
     br:
       com:
         fsales: info
+
+management:
+  health:
+    binders:
+      enabled: true
+  endpoint:
+    include: health,info,metrics,prometheus
+
+springdoc:
+  swagger-ui:
+    path: '/swagger-ui.html' #path: /api-docs
+
+application:
+  title: '@project.name@'
+  version: '@project.version@'
+
+  swagger:
+    application:
+      name: '@project.name@'
+      description: '@project.description@'
+      version: '@project.version@'
+
