@@ -13,7 +13,7 @@ COPY ./src ./src/
 ENV MAVEN_OPTS='-Xmx8g'
 
 RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && \
-    mvn -Dmaven.test.skip=true clean package -Pnative"
+    mvn -Dmaven.test.skip=true clean package"
 
 
 # Stage 2: Create a minimal image to run the application
