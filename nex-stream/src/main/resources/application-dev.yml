@@ -9,7 +9,7 @@ logging:
   level:
     br:
       com:
-        fsales: debug
+        fsales: info
     org:
       springframework:
         data:
